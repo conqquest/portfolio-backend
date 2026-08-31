@@ -66,3 +66,32 @@ export async function topTracks(req: Request, res: Response) {
     });
   }
 }
+
+export async function currentlyOrRecentlyPlayed(req: Request, res: Response) {
+  try {
+    const song = await getNowPlaying();
+
+    if (song && song.isPlaying) {
+      return res.status(200).json(song);
+    }
+
+    const recent = await getRecentlyPlayed();
+    if (recent && recent.length > 0) {
+      return res.status(200).json({
+        isPlaying: false,
+        ...recent[0],
+      });
+    }
+
+    res.status(200).json({
+      isPlaying: false,
+      message: "No track currently playing or recently played found.",
+    });
+  } catch (error) {
+    console.error("Currently or Recently Played Error:", error);
+
+    res.status(500).json({
+      message: "Failed to fetch playing status.",
+    });
+  }
+}

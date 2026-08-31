@@ -5,6 +5,7 @@ import {
   recentlyPlayed,
   topArtists,
   topTracks,
+  currentlyOrRecentlyPlayed,
 } from "../controllers/spotify.controller";
 
 const router = Router();
@@ -86,5 +87,7 @@ router.get("/api/spotify/recent", recentlyPlayed);
 router.get("/api/spotify/top-artists", topArtists);
 
 router.get("/api/spotify/top-tracks", topTracks);
+
+router.get("/api/spotify/currently-or-recently-played", currentlyOrRecentlyPlayed);
 
 export default router;
